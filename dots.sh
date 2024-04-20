@@ -11,6 +11,9 @@ source plugins/asker.sh
 
 repository_git_path=$(jq -r ".repository_path" <"./config/config.json")
 
+# Clona os arquivos para o diretório informado
+./plugins/clone-files.sh "${repository_git_path}"
+
 mkdir -p "${repository_git_path}"
 cd "${repository_git_path}" || exit
 
