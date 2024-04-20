@@ -1,6 +1,3 @@
 {
-    "repository_path": "./seila",
-    "github": {
-        "repository": "git@github.com:User/Repository.git"
-    }
+    "repository_path": "/path/to/repository"
 }

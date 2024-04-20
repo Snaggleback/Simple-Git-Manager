@@ -3,16 +3,18 @@
 # Variável usada para armazenar as últimas respostas
 last_res=""
 
-# Importa as funções dos arquivos
-source plugins/show-status.sh
-source plugins/press-close.sh
-source plugins/asker-yes-no.sh
-source plugins/asker.sh
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-repository_git_path=$(jq -r ".repository_path" <"./config/config.json")
+# Importa as funções dos arquivos
+source "${script_dir}/plugins/show-status.sh"
+source "${script_dir}/plugins/press-close.sh"
+source "${script_dir}/plugins/asker-yes-no.sh"
+source "${script_dir}/plugins/asker.sh"
+
+repository_git_path=$(jq -r ".repository_path" <"${script_dir}/config/config.json")
 
 # Clona os arquivos para o diretório informado
-./plugins/clone-files.sh "${repository_git_path}"
+"${script_dir}/plugins/clone-files.sh" "${repository_git_path}"
 
 mkdir -p "${repository_git_path}"
 cd "${repository_git_path}" || exit
