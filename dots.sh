@@ -24,13 +24,14 @@ commit_description="As configurações foram atualizadas para atender melhor às
 
 asker_yes_no "Deseja publicar essas alterações no github?" "S" last_res
 
+# Se o usuário deseja publicar
 if [ "${last_res}" = true ]; then
-    asker_yes_no "Deseja personalizar o título e a descricão do commit?" "N" last_res
-
-    if [ "${last_res}" = true ]; then
-        asker "Qual título você deseja adicionar?" commit_title
-        asker "Qual descricão você deseja adicionar?" commit_description
-    fi
+    # Caso o usuário deseje personalizar o título
+    asker_yes_no "Deseja personalizar o título?" "N" last_res
+    [ "${last_res}" = true ] && asker "Qual título você deseja adicionar?" commit_title
+    # Caso o usuário deseje personalizar a descricão
+    asker_yes_no "Deseja personalizar a descricão?" "N" last_res
+    [ "${last_res}" = true ] && asker "Qual descricão você deseja adicionar?" commit_description
 
     asker_yes_no "Confirma a publicação com o título \"${commit_title}\" e a descricão \"${commit_description:0:20}...\"?" "S" last_res
 
