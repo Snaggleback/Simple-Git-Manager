@@ -11,7 +11,7 @@ source "${script_dir}/plugins/press-close.sh"
 source "${script_dir}/plugins/asker-yes-no.sh"
 source "${script_dir}/plugins/asker.sh"
 
-repository_git_path=$(jq -r ".repository_path" <"${script_dir}/config/config.json")
+repository_git_path=$(jq -r ".repository_path" <"${script_dir}/config.json")
 
 # Clona os arquivos para o diretório informado
 "${script_dir}/plugins/clone-files.sh" "${repository_git_path}"
