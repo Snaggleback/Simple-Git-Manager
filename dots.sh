@@ -14,6 +14,11 @@ dotfiles_modified=()
 # Mostra o status dos arquivos modificados e atribui os arquivos modificados ao array
 show_status dotfiles_modified
 
+if [ -z "${dotfiles_modified[*]}" ]; then
+    press_close
+    exit 0 # Se o array estiver vazio, não faz nada e encerra o script
+fi
+
 commit_title="Atualiza: Configurações atualizadas/melhoradas"
 commit_description="As configurações foram atualizadas para atender melhor às minhas necessidades. Veja os arquivos de configuração em questão: ${dotfiles_modified[*]}"
 
