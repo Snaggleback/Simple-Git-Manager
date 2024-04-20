@@ -26,12 +26,8 @@ asker_yes_no "Deseja publicar essas alterações no github?" "S" last_res
 
 # Se o usuário deseja publicar
 if [ "${last_res}" = true ]; then
-    # Caso o usuário deseje personalizar o título
-    asker_yes_no "Deseja personalizar o título?" "N" last_res
-    [ "${last_res}" = true ] && asker "Qual título você deseja adicionar?" commit_title
-    # Caso o usuário deseje personalizar a descricão
-    asker_yes_no "Deseja personalizar a descricão?" "N" last_res
-    [ "${last_res}" = true ] && asker "Qual descricão você deseja adicionar?" commit_description
+     asker "Qual título você deseja adicionar? (tecle enter para usar o título padrão):" commit_title
+     asker "Qual descricão você deseja adicionar? (tecle enter para usar a descricão padrão):" commit_description
 
     asker_yes_no "Confirma a publicação com o título \"${commit_title}\" e a descricão \"${commit_description:0:20}...\"?" "S" last_res
 
