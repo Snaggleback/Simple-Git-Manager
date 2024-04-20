@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Variável usada para armazenar as respostas temporárias
-res=""
+# Variável usada para armazenar as últimas respostas
+last_res=""
 
 # Importa as funções dos arquivos
 source plugins/show-status.sh
@@ -22,19 +22,19 @@ fi
 commit_title="Atualiza: Configurações atualizadas/melhoradas"
 commit_description="As configurações foram atualizadas para atender melhor às minhas necessidades. Veja os arquivos de configuração em questão: ${dotfiles_modified[*]}"
 
-asker_yes_no "Deseja publicar essas alterações no github?" "S" res
+asker_yes_no "Deseja publicar essas alterações no github?" "S" last_res
 
-if [ "${res}" = true ]; then
-    asker_yes_no "Deseja personalizar o título e a descricão do commit?" "N" res
+if [ "${last_res}" = true ]; then
+    asker_yes_no "Deseja personalizar o título e a descricão do commit?" "N" last_res
 
-    if [ "${res}" = true ]; then
+    if [ "${last_res}" = true ]; then
         asker "Qual título você deseja adicionar?" commit_title
         asker "Qual descricão você deseja adicionar?" commit_description
     fi
 
-    asker_yes_no "Confirma a publicação com o título \"${commit_title}\" e a descricão \"${commit_description:0:20}...\"?" "S" res
+    asker_yes_no "Confirma a publicação com o título \"${commit_title}\" e a descricão \"${commit_description:0:20}...\"?" "S" last_res
 
-    if [ "${res}" = true ]; then
+    if [ "${last_res}" = true ]; then
         git add -A
         git commit -m "${commit_title}" -m "${commit_description}"
     fi
