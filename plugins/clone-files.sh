@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Carregando o plugin de substituição de variáveis
+source "${BASH_SOURCE[0]%/*}/replace-env.sh"
+
 # Caminho do repositório que será enviado os arquivos clonados
 repository_path="${1}"
 
@@ -11,7 +14,8 @@ monitored_paths=()
 
 # Lê o arquivo JSON e adiciona cada elemento ao array
 while IFS= read -r line; do
-    monitored_paths+=("$HOME/${line}")
+    # Substitui as variáveis de ambiente
+    monitored_paths+=("$(replace_env "${line}")")
 done < <(jq -r '.monitored_paths[]' "${config_file}")
 
 # Copiando todos os arquivos para dentro da nossa pasta

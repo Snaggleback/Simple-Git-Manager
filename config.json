@@ -1,20 +1,20 @@
 {
-    "repository_path": "/home/italo/Documentos/Projetos/Dotfiles",
+    "repository_path": "$HOME/Documentos/Projetos/Dotfiles",
     "monitored_paths": [
-        ".config/dunst",
-        ".config/htop",
-        ".config/i3/config",
-        ".config/kitty",
-        ".config/picom",
-        ".config/ranger",
-        ".config/rofi",
-        ".config/user-dirs.dirs",
-        ".config/neofetch",
-        ".config/fontconfig",
-        ".icons/system",
-        ".scripts",
-        ".bashrc",
-        ".config/Code/User/settings.json",
-        ".config/Code/User/keybindings.json"
+        "~/.config/dunst",
+        "~/.config/htop",
+        "~/.config/i3/config",
+        "~/.config/kitty",
+        "~/.config/picom",
+        "~/.config/ranger",
+        "~/.config/rofi",
+        "~/.config/user-dirs.dirs",
+        "~/.config/neofetch",
+        "~/.config/fontconfig",
+        "~/.icons/system",
+        "~/.scripts",
+        "~/.bashrc",
+        "~/.config/Code/User/settings.json",
+        "~/.config/Code/User/keybindings.json"
     ]
 }

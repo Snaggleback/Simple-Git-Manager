@@ -20,6 +20,7 @@ source_plugins() {
     source "${script_dir}/plugins/press-close.sh" || exit_with_error "Falha ao carregar 'press-close.sh'"
     source "${script_dir}/plugins/asker-yes-no.sh" || exit_with_error "Falha ao carregar 'asker-yes-no.sh'"
     source "${script_dir}/plugins/asker.sh" || exit_with_error "Falha ao carregar 'asker.sh'"
+    source "${script_dir}/plugins/replace-env.sh" || exit_with_error "Falha ao carregar 'replace-env.sh'"
 }
 
 # Função para clonar o repositório
@@ -40,6 +41,8 @@ main() {
 
     # Obtendo o diretório do repositório que será utilizado no script
     repository_git_path=$(jq -r ".repository_path" <"${script_dir}/config.json")
+    # Substituindo o caminho $HOME pelo caminho absoluto
+    repository_git_path=$(replace_env "${repository_git_path}")
     # Criando o diretório do repositório caso não exista
     mkdir -p "${repository_git_path}" || exit_with_error "Falha ao criar diretório '${repository_git_path}'"
     # Acessando o diretório do repositório
