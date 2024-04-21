@@ -1,44 +1,28 @@
 #!/bin/bash
 
+# Caminho do repositório que será enviado os arquivos clonados
 repository_path="${1}"
 
+# Caminho do arquivo de configuração
+config_file="$(dirname "${BASH_SOURCE[0]}")/../config.json"
+
 # Lista dos caminhos que estão sendo monitorados atualmente
-monitored_path=(
-    # Arquivos de configuração dentro de ".config"
-    "$HOME/.config/dunst"
-    "$HOME/.config/htop"
-    "$HOME/.config/i3/config"
-    "$HOME/.config/kitty"
-    "$HOME/.config/picom"
-    "$HOME/.config/ranger"
-    "$HOME/.config/rofi"
-    "$HOME/.config/user-dirs.dirs"
-    "$HOME/.config/neofetch"
-    "$HOME/.config/fontconfig"
-    # Ícones svg/png do sistema personalizados
-    "$HOME/.icons/system"
-    # Scripts personalizados
-    "$HOME/.scripts"
-    # Aliases e personalizações do bash
-    "$HOME/.bashrc"
-    # Configurações do meu Visual Studio Code
-    "$HOME/.config/Code/User/settings.json"
-    "$HOME/.config/Code/User/keybindings.json"
-)
+monitored_paths=()
+
+# Lê o arquivo JSON e adiciona cada elemento ao array
+while IFS= read -r line; do
+    monitored_paths+=("$HOME/${line}")
+done < <(jq -r '.monitored_paths[]' "${config_file}")
 
 # Copiando todos os arquivos para dentro da nossa pasta
-for path in "${monitored_path[@]}"; do
-
+for path in "${monitored_paths[@]}"; do
     # Nome do caminho (sem contar o final) do diretório atual
     directory_name=$(dirname "${path}")
 
-    # Lógica, se um caminho for igual à HOME do usuário, então significa que ele não é um diretório e sim um arquivo, ou seja, podemos simplesmente copia-lo
+    # Se o diretório atual for o $HOME ele copia e pula para o proximo
     if [ "${directory_name}" = "$HOME" ]; then
-
         # Copia então o caminho para o diretório atual
         cp -rp "${path}" "${repository_path}"
-
-        # Pula para o próximo
         continue
     fi
 
