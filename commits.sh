@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#!/bin/bash
+
 # Função para exibir mensagens de erro e sair
 exit_with_error() {
     echo "Erro: ${1}" >&2
@@ -23,30 +25,15 @@ source_functions() {
     source "${script_dir}/functions/replace-env.sh" || exit_with_error "Falha ao carregar 'replace-env.sh'"
 }
 
-# Função para clonar o repositório
-clone_repository() {
-    local repository_git_path="$1"
-    "${script_dir}/functions/clone-files.sh" "${repository_git_path}" || exit_with_error "Falha ao clonar o repositório"
-}
-
 # Função principal
 main() {
     # Definindo variáveis locais que serão usadas dentro da função
-    local script_dir repository_git_path last_res dotfiles_modified commit_title commit_description
+    local script_dir last_res dotfiles_modified commit_title commit_description
 
     # Obtendo o diretório do script
     script_dir=$(get_script_dir)
     # Carregando functions
     source_functions "$script_dir"
-
-    # Obtendo o diretório do repositório que será utilizado no script
-    repository_git_path=$(jq -r ".repository_path" <"${script_dir}/config.json")
-    # Substituindo o caminho $HOME pelo caminho absoluto
-    repository_git_path=$(replace_env "${repository_git_path}")
-    # Criando o diretório do repositório caso não exista
-    mkdir -p "${repository_git_path}" || exit_with_error "Falha ao criar diretório '${repository_git_path}'"
-    # Acessando o diretório do repositório
-    cd "${repository_git_path}" || exit_with_error "Falha ao acessar o diretório '${repository_git_path}'"
 
     if [ ! -d ".git" ]; then
         # Caso o diretório não contenha um repositório Git
@@ -67,8 +54,6 @@ main() {
         echo "O diretório informado contém um repositório Git"
     fi
 
-    clone_repository "${repository_git_path}"
-
     dotfiles_modified=()
     show_status dotfiles_modified
 
@@ -77,8 +62,8 @@ main() {
         exit 0
     fi
 
-    commit_title="Atualiza: Configurações atualizadas/melhoradas"
-    commit_description="As configurações foram atualizadas para atender melhor às necessidades. Veja os arquivos de configuração em questão: ${dotfiles_modified[*]}"
+    commit_title="Atualiza: Atualização nos Arquivos e Estrutura"
+    commit_description="Os arquivos foram atualizadas para atender melhor às necessidades. Veja o que foi feito nessa atualização: ${dotfiles_modified[*]}"
 
     asker_yes_no "Deseja publicar essas alterações no github?" "S" last_res
 
@@ -100,3 +85,4 @@ main() {
 
 # Chama a função principal
 main
+
