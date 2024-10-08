@@ -8,6 +8,7 @@ exit_with_error() {
 
 # Função para obter o diretório do script
 get_script_dir() {
+    # shellcheck disable=SC2005
     echo "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 }
 
@@ -17,6 +18,7 @@ source_functions() {
     local functions=("show-status" "press-close" "asker-yes-no" "asker" "replace-env" "initialize-git-repo")
 
     for func in "${functions[@]}"; do
+        # shellcheck disable=SC1090
         source "${script_dir}/functions/${func}.sh" || exit_with_error "Erro ao carregar '${func}.sh'"
     done
 }
