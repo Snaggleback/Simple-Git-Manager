@@ -7,7 +7,7 @@ source "${BASH_SOURCE[0]%/*}/replace-env.sh"
 repository_path="${1}"
 
 # Caminho do arquivo de configuração
-config_file="$(dirname "${BASH_SOURCE[0]}")/../config.json"
+config_file="$(dirname "${BASH_SOURCE[0]}")/../dotfiles.json"
 
 # Lista dos caminhos que estão sendo monitorados atualmente
 monitored_paths=()
