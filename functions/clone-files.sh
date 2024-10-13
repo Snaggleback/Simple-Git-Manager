@@ -18,6 +18,20 @@ while IFS= read -r line; do
     monitored_paths+=("$(replace_env "${line}")")
 done < <(jq -r '.monitored_paths[]' "${config_file}")
 
+# Excluindo os arquivos
+for path in "${monitored_paths[@]}"; do
+    # Remover a parte "/home/italo" do caminho
+    path_without_home="${path/#\/home\/italo/}"  # Remove a parte "/home/italo" do início do caminho
+    expanded_path="$repository_path$path_without_home"  # Combina o caminho do repositório com o caminho modificado
+    
+    # Verificando se o arquivo existe antes de tentar remover
+    if [ -e "$expanded_path" ]; then
+        rm -rf "$expanded_path"
+    else
+        echo "Arquivo não encontrado: $expanded_path"
+    fi
+done
+
 # Copiando todos os arquivos para dentro da nossa pasta
 for path in "${monitored_paths[@]}"; do
     # Nome do caminho (sem contar o final) do diretório atual
