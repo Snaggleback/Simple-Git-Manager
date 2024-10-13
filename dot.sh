@@ -88,7 +88,6 @@ main() {
     fi
 
     press_close
-    echo ""
 }
 
 # Executa a função principal
