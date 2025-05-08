@@ -42,6 +42,6 @@ show_status() {
         echo "- ${file} (${type}) (${named_status})"
 
         # Armazena o caminho do arquivo e o status em um array passado pelo parâmetro da função
-        eval "${1}+=(\"${file} (${type,,}, foi ${named_status,,}), \")"
+        eval "${1}+=(\"${file} (${type,,}, foi ${named_status,,}) \")"
     done <<<"$status_output" # Redireciona a saída para o loop while
 }
